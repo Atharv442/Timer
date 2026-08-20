@@ -20,6 +20,27 @@ const startBtn      = document.getElementById('start-btn');
 const stopBtn       = document.getElementById('stop-btn');
 const backBtn       = document.getElementById('back-btn');
 const timerDisplay  = document.getElementById('timer-display');
+const themeToggle   = document.getElementById('theme-toggle');
+const themeIcon     = themeToggle.querySelector('.theme-icon');
+const themeLabel    = themeToggle.querySelector('.theme-label');
+
+// ── Theme ───────────────────────────────────────────────────────
+function applyTheme(theme) {
+  const isLight = theme === 'light';
+  document.documentElement.dataset.theme = isLight ? 'light' : 'dark';
+  themeIcon.textContent = isLight ? '☾' : '☼';
+  themeLabel.textContent = isLight ? 'Dark' : 'Light';
+  themeToggle.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} mode`);
+  themeToggle.setAttribute('aria-pressed', String(isLight));
+}
+
+const savedTheme = localStorage.getItem('timer-theme');
+applyTheme(savedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+themeToggle.addEventListener('click', () => {
+  const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+  localStorage.setItem('timer-theme', nextTheme);
+  applyTheme(nextTheme);
+});
 
 // ── Helpers ─────────────────────────────────────────────────────
 function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
