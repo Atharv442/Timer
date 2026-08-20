@@ -7,14 +7,43 @@
   box-sizing: border-box;
 }
 
+:root {
+  color-scheme: dark;
+  --page-bg: #000;
+  --setup-bg: radial-gradient(ellipse at center, #1a1a1a 0%, #000 70%);
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-strong: #111;
+  --border: rgba(255, 255, 255, 0.09);
+  --text: #fff;
+  --muted: #666;
+  --accent: #ff9800;
+  --accent-deep: #e65100;
+  --control-bg: rgba(18, 18, 18, 0.88);
+  --secondary-button: #272727;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page-bg: #f3f5f7;
+  --setup-bg: radial-gradient(ellipse at center, #ffffff 0%, #e7ebef 70%);
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: #ffffff;
+  --border: rgba(24, 34, 44, 0.14);
+  --text: #18222c;
+  --muted: #687581;
+  --control-bg: rgba(255, 255, 255, 0.9);
+  --secondary-button: #e0e5e9;
+}
+
 body,
 html {
   width: 100%;
   height: 100%;
-  background: #000;
-  color: #fff;
+  background: var(--page-bg);
+  color: var(--text);
   font-family: 'Inter', sans-serif;
   overflow: hidden;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 /* ─── Screen visibility ──────────────────────────────────── */
@@ -34,7 +63,41 @@ html {
    SETUP SCREEN
 ═══════════════════════════════════════════════════════════ */
 #setup-screen {
-  background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 70%);
+  background: var(--setup-bg);
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font: 600 0.8rem 'Inter', sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+
+.theme-icon {
+  color: var(--accent);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.theme-label {
+  letter-spacing: 0.04em;
 }
 
 .setup-card {
@@ -43,8 +106,8 @@ html {
   align-items: center;
   gap: 2rem;
   padding: 3rem 4rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 28px;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
 }
@@ -97,10 +160,10 @@ html {
 .input-group input {
   width: 100px;
   height: 100px;
-  background: #111;
-  border: 2px solid #2a2a2a;
+  background: var(--surface-strong);
+  border: 2px solid var(--border);
   border-radius: 20px;
-  color: #ff9800;
+  color: var(--accent);
   font-family: 'Chakra Petch', monospace;
   font-size: 3rem;
   font-weight: 700;
@@ -159,7 +222,7 @@ html {
    RUNNING SCREEN
 ═══════════════════════════════════════════════════════════ */
 #running-screen {
-  background: #000;
+  background: var(--page-bg);
   flex-direction: column;
   position: relative;
 }
@@ -236,8 +299,8 @@ html {
   transform: translateX(-50%);
   display: flex;
   gap: 1rem;
-  background: rgba(18, 18, 18, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--control-bg);
+  border: 1px solid var(--border);
   border-radius: 50px;
   padding: 0.45rem 1.1rem;
   backdrop-filter: blur(14px);
@@ -263,8 +326,8 @@ html {
 }
 
 .btn-back {
-  background: #272727;
-  color: #ddd;
+  background: var(--secondary-button);
+  color: var(--text);
 }
 
 .btn-stop.paused {
